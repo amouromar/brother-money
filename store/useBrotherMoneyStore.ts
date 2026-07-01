@@ -5,13 +5,16 @@ import {
   createBill,
   createSavingsRule,
   createTransaction,
+  createWishlistItem,
   deleteBill,
   deleteMultipleTransactions,
   deleteSavingsRule,
   deleteTransaction,
+  deleteWishlistItem,
   updateBill,
   updateSavingsRule,
   updateTransaction,
+  updateWishlistItem,
 } from "../lib/brother-money/engine";
 import { createSeedState } from "../lib/brother-money/seed";
 import {
@@ -119,6 +122,20 @@ type BrotherMoneyStore = BrotherMoneyState &
         velocityWindowDays: number;
       }>,
     ) => Promise<void>;
+    addWishlistItem: (input: {
+      name: string;
+      cost: number;
+      note: string;
+    }) => Promise<void>;
+    updateWishlistItemById: (
+      itemId: string,
+      updates: {
+        name?: string;
+        cost?: number;
+        note?: string;
+      },
+    ) => Promise<void>;
+    deleteWishlistItemById: (itemId: string) => Promise<void>;
   };
 
 function withDerivedState(state: BrotherMoneyState) {
@@ -539,6 +556,62 @@ export const useBrotherMoneyStore = create<BrotherMoneyStore>((set, get) => ({
         ...current.spendingPreferences,
         ...preferences,
       },
+      updatedAt: new Date().toISOString(),
+    };
+
+    set({
+      ...withDerivedState(next),
+      hydrated: true,
+      hydrationError: null,
+    });
+    await persistState({ ...current, ...next });
+  },
+  addWishlistItem: async (input) => {
+    const current = get();
+    const item = createWishlistItem(input);
+    const next: BrotherMoneyState = {
+      ...current,
+      wishlistItems: [item, ...current.wishlistItems],
+      updatedAt: new Date().toISOString(),
+    };
+
+    set({
+      ...withDerivedState(next),
+      hydrated: true,
+      hydrationError: null,
+    });
+    await persistState({ ...current, ...next });
+  },
+  updateWishlistItemById: async (itemId, updates) => {
+    const current = get();
+    const itemIndex = current.wishlistItems.findIndex((i) => i.id === itemId);
+    if (itemIndex === -1) return;
+
+    const updatedItem = updateWishlistItem(
+      current.wishlistItems[itemIndex],
+      updates,
+    );
+    const newItems = [...current.wishlistItems];
+    newItems[itemIndex] = updatedItem;
+
+    const next: BrotherMoneyState = {
+      ...current,
+      wishlistItems: newItems,
+      updatedAt: new Date().toISOString(),
+    };
+
+    set({
+      ...withDerivedState(next),
+      hydrated: true,
+      hydrationError: null,
+    });
+    await persistState({ ...current, ...next });
+  },
+  deleteWishlistItemById: async (itemId) => {
+    const current = get();
+    const next: BrotherMoneyState = {
+      ...current,
+      wishlistItems: deleteWishlistItem(current.wishlistItems, itemId),
       updatedAt: new Date().toISOString(),
     };
 

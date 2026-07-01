@@ -1,15 +1,17 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { formatMoney } from "../../lib/brother-money/currency";
 import { Bill } from "../../lib/brother-money/types";
 import { useBrotherMoneyStore } from "../../store/useBrotherMoneyStore";
 import { AppCard } from "../ui/AppCard";
+import { Touchable } from "../ui/Touchable";
 
 interface BillItemProps {
   bill: Bill;
+  onEdit?: (bill: Bill) => void;
 }
 
-export function BillItem({ bill }: BillItemProps) {
+export function BillItem({ bill, onEdit }: BillItemProps) {
   const { colors } = useTheme();
   const { deleteBillById, updateBillById } = useBrotherMoneyStore();
 
@@ -65,9 +67,9 @@ export function BillItem({ bill }: BillItemProps) {
             </Text>
           </View>
           <View className="flex-row gap-2">
-            <TouchableOpacity
+            <Touchable
               onPress={handleToggleActive}
-              className="px-3 py-1 rounded-lg"
+              className="px-3 py-2 rounded-lg"
               style={{
                 backgroundColor: bill.active ? "#22C55E" : colors.card,
               }}
@@ -81,10 +83,25 @@ export function BillItem({ bill }: BillItemProps) {
               >
                 {bill.active ? "Active" : "Inactive"}
               </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+            </Touchable>
+            <Touchable
+              onPress={() => onEdit?.(bill)}
+              className="px-3 py-2 rounded-lg"
+              style={{ backgroundColor: "#3B82F6" }}
+            >
+              <Text
+                className="text-xs font-semibold"
+                style={{
+                  color: colors.surface,
+                  fontFamily: "CenturyGothicBold",
+                }}
+              >
+                Edit
+              </Text>
+            </Touchable>
+            <Touchable
               onPress={handleDelete}
-              className="px-3 py-1 rounded-lg"
+              className="px-3 py-2 rounded-lg"
               style={{ backgroundColor: "#EF4444" }}
             >
               <Text
@@ -96,7 +113,7 @@ export function BillItem({ bill }: BillItemProps) {
               >
                 Delete
               </Text>
-            </TouchableOpacity>
+            </Touchable>
           </View>
         </View>
       </View>

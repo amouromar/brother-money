@@ -1,10 +1,11 @@
 // import { useRouter } from "expo-router";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useBrotherMoneyStore } from "../../store/useBrotherMoneyStore";
 import { AppCard } from "../ui/AppCard";
 import { ScreenHeader } from "../ui/ScreenHeader";
+import { Touchable } from "../ui/Touchable";
 
 type RiskTolerance = "conservative" | "moderate" | "aggressive";
 type TimeHorizon = "weekly" | "biweekly" | "monthly";
@@ -92,7 +93,7 @@ export function SpendingSettingsScreen() {
 
           <View className="gap-2">
             {RISK_TOLERANCE_OPTIONS.map((option) => (
-              <TouchableOpacity
+              <Touchable
                 key={option.value}
                 onPress={() => handleUpdateRiskTolerance(option.value)}
                 className="p-3 rounded-xl border-2"
@@ -131,7 +132,7 @@ export function SpendingSettingsScreen() {
                 >
                   {option.description}
                 </Text>
-              </TouchableOpacity>
+              </Touchable>
             ))}
           </View>
         </AppCard>
@@ -153,7 +154,7 @@ export function SpendingSettingsScreen() {
 
           <View className="gap-2">
             {TIME_HORIZON_OPTIONS.map((option) => (
-              <TouchableOpacity
+              <Touchable
                 key={option.value}
                 onPress={() => handleUpdateTimeHorizon(option.value)}
                 className="p-3 rounded-xl border-2"
@@ -192,7 +193,7 @@ export function SpendingSettingsScreen() {
                 >
                   {option.description}
                 </Text>
-              </TouchableOpacity>
+              </Touchable>
             ))}
           </View>
         </AppCard>
@@ -214,7 +215,7 @@ export function SpendingSettingsScreen() {
 
           <View className="flex-row gap-2">
             {BUFFER_PERCENT_OPTIONS.map((percent) => (
-              <TouchableOpacity
+              <Touchable
                 key={percent}
                 onPress={() => handleUpdateBufferPercent(percent)}
                 className="flex-1 p-3 rounded-xl border-2 items-center"
@@ -241,7 +242,7 @@ export function SpendingSettingsScreen() {
                 >
                   {percent}%
                 </Text>
-              </TouchableOpacity>
+              </Touchable>
             ))}
           </View>
         </AppCard>
@@ -263,7 +264,7 @@ export function SpendingSettingsScreen() {
 
           <View className="flex-row gap-2">
             {VELOCITY_WINDOW_OPTIONS.map((days) => (
-              <TouchableOpacity
+              <Touchable
                 key={days}
                 onPress={() => handleUpdateVelocityWindow(days)}
                 className="flex-1 p-3 rounded-xl border-2 items-center"
@@ -290,7 +291,7 @@ export function SpendingSettingsScreen() {
                 >
                   {days}d
                 </Text>
-              </TouchableOpacity>
+              </Touchable>
             ))}
           </View>
         </AppCard>

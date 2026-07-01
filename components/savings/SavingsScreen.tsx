@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { View, ScrollView, TouchableOpacity, Text } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../../contexts/ThemeContext";
-import { ScreenHeader } from "../ui/ScreenHeader";
-import { SavingsItem } from "./SavingsItem";
-import { AddSavingsModal } from "./AddSavingsModal";
 import { useBrotherMoneyStore } from "../../store/useBrotherMoneyStore";
+import { ScreenHeader } from "../ui/ScreenHeader";
+import { AddSavingsModal } from "./AddSavingsModal";
+import { SavingsItem } from "./SavingsItem";
+import { Touchable } from "../ui/Touchable";
 
 export function SavingsScreen() {
   const { colors } = useTheme();
@@ -20,14 +21,14 @@ export function SavingsScreen() {
         title="Savings"
         showBackButton
         rightAction={
-          <TouchableOpacity onPress={() => setShowAddModal(true)}>
+          <Touchable onPress={() => setShowAddModal(true)}>
             <Text
               className="text-lg font-semibold"
               style={{ color: "#3B82F6" }}
             >
               + Add
             </Text>
-          </TouchableOpacity>
+          </Touchable>
         }
       />
 

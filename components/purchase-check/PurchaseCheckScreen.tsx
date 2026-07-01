@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../../contexts/ThemeContext";
 import { formatMoney } from "../../lib/brother-money/currency";
@@ -7,6 +7,7 @@ import { useBrotherMoneyStore } from "../../store/useBrotherMoneyStore";
 import { AppCard } from "../ui/AppCard";
 import { ScreenHeader } from "../ui/ScreenHeader";
 import { TextField } from "../ui/TextField";
+import { Touchable } from "../ui/Touchable";
 
 export function PurchaseCheckScreen() {
   const { colors } = useTheme();
@@ -45,7 +46,7 @@ export function PurchaseCheckScreen() {
           keyboardType="decimal-pad"
         />
 
-        <TouchableOpacity
+        <Touchable
           onPress={handleCheck}
           className="min-h-[52px] flex-row items-center justify-center gap-3 rounded-xl"
           style={{ backgroundColor: colors.text }}
@@ -56,7 +57,7 @@ export function PurchaseCheckScreen() {
           >
             Check
           </Text>
-        </TouchableOpacity>
+        </Touchable>
 
         {result && (
           <AppCard className="p-6">

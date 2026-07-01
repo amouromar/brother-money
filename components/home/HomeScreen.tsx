@@ -1,5 +1,6 @@
 import { useRouter } from "expo-router";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ArrowLeftRight, Bookmark, Settings2 } from "lucide-react-native";
+import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../../contexts/ThemeContext";
 import { formatMoney } from "../../lib/brother-money/currency";
@@ -8,7 +9,7 @@ import { AppCard } from "../ui/AppCard";
 import { ScreenHeader } from "../ui/ScreenHeader";
 import { StatCard } from "../ui/StatCard";
 import { ArrowCircleDown, ArrowCircleUp, Money, Wallet } from "../ui/icons";
-import { Bookmark, ArrowLeftRight, Settings2 } from "lucide-react-native";
+import { Touchable } from "../ui/Touchable";
 
 export function HomeScreen() {
   const router = useRouter();
@@ -87,9 +88,8 @@ export function HomeScreen() {
 
         {/* Stats Row */}
         <View className="flex-row gap-3">
-          <TouchableOpacity
+          <Touchable
             onPress={() => router.push("/protected-money")}
-            activeOpacity={0.7}
             className="flex-1"
           >
             <StatCard
@@ -99,7 +99,7 @@ export function HomeScreen() {
               className="rounded-xl"
               accentColor="#22C55E"
             />
-          </TouchableOpacity>
+          </Touchable>
           <StatCard
             label="Available Cash"
             value={formatMoney(overview.availableCash)}
@@ -108,7 +108,7 @@ export function HomeScreen() {
         </View>
 
         {/* Update Cash Button */}
-        <TouchableOpacity
+        <Touchable
           onPress={handleUpdateCash}
           className="min-h-[52px] flex-row items-center justify-center gap-3 rounded-xl"
           style={{ backgroundColor: colors.text }}
@@ -120,7 +120,7 @@ export function HomeScreen() {
           >
             Update Balance
           </Text>
-        </TouchableOpacity>
+        </Touchable>
 
         {/* Quick Actions */}
         <View className="gap-3">
@@ -132,7 +132,7 @@ export function HomeScreen() {
           </Text>
 
           <View className="flex-row gap-3 justify-between">
-            <TouchableOpacity
+            <Touchable
               onPress={() => router.push("/log-expense")}
               className="w-[110px] min-h-[52px] flex-col items-center justify-center gap-2 px-4 py-3 rounded-xl"
               style={{ backgroundColor: colors.text }}
@@ -147,9 +147,9 @@ export function HomeScreen() {
               >
                 Add Expense
               </Text>
-            </TouchableOpacity>
+            </Touchable>
 
-            <TouchableOpacity
+            <Touchable
               onPress={() => router.push("/log-income")}
               className="w-[110px] min-h-[52px] flex-col items-center justify-center gap-2 px-4 py-3 rounded-xl"
               style={{ backgroundColor: colors.text }}
@@ -164,9 +164,9 @@ export function HomeScreen() {
               >
                 Add Income
               </Text>
-            </TouchableOpacity>
+            </Touchable>
 
-            <TouchableOpacity
+            <Touchable
               onPress={() => router.push("/purchase-check")}
               className="w-[110px] min-h-[52px] flex-col items-center justify-center gap-2 px-4 py-3 rounded-xl"
               style={{ backgroundColor: colors.text }}
@@ -181,7 +181,7 @@ export function HomeScreen() {
               >
                 Can I Buy This?
               </Text>
-            </TouchableOpacity>
+            </Touchable>
           </View>
         </View>
       </ScrollView>
@@ -192,32 +192,26 @@ export function HomeScreen() {
           className="flex-row items-center justify-between px-8 py-4 rounded-full"
           style={{ backgroundColor: colors.card, width: "80%" }}
         >
-          <TouchableOpacity
+          <Touchable
             onPress={() => router.push("/wishlist")}
             className="items-center"
-            activeOpacity={0.7}
-            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
             <Bookmark size={24} color={colors.text} />
-          </TouchableOpacity>
+          </Touchable>
 
-          <TouchableOpacity
+          <Touchable
             onPress={() => router.push("/transactions")}
             className="items-center"
-            activeOpacity={0.7}
-            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
             <ArrowLeftRight size={24} color={colors.text} />
-          </TouchableOpacity>
+          </Touchable>
 
-          <TouchableOpacity
+          <Touchable
             onPress={() => router.push("/settings")}
             className="flex-row items-center gap-2 px-4 py-2 rounded-full"
-            activeOpacity={0.7}
-            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
             <Settings2 size={20} color={colors.text} />
-          </TouchableOpacity>
+          </Touchable>
         </View>
       </View>
     </SafeAreaView>

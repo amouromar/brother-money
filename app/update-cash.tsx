@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Text, ScrollView } from "react-native";
+import { ScrollView, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTheme } from "../contexts/ThemeContext";
+import { AppCard } from "../components/ui/AppCard";
 import { ScreenHeader } from "../components/ui/ScreenHeader";
 import { TextField } from "../components/ui/TextField";
-import { PrimaryButton } from "../components/ui/PrimaryButton";
-import { AppCard } from "../components/ui/AppCard";
-import { useBrotherMoneyStore } from "../store/useBrotherMoneyStore";
+import { Touchable } from "../components/ui/Touchable";
+import { useTheme } from "../contexts/ThemeContext";
 import { formatMoney } from "../lib/brother-money/currency";
+import { useBrotherMoneyStore } from "../store/useBrotherMoneyStore";
 
 export default function UpdateCashScreen() {
   const { colors } = useTheme();
@@ -28,21 +28,21 @@ export default function UpdateCashScreen() {
       <ScrollView contentContainerClassName="p-4 gap-4">
         <AppCard className="p-6">
           <Text
-            className="text-lg font-semibold font-CenturyGothicBold mb-2"
-            style={{ color: colors.text }}
+            className="text-lg mb-2"
+            style={{ color: colors.text, fontFamily: "CenturyGothicBold" }}
           >
             Current Cash
           </Text>
           <Text
-            className="text-3xl font-bold font-CenturyGothicBold mb-4"
-            style={{ color: colors.text }}
+            className="text-4xl mb-4"
+            style={{ color: colors.text, fontFamily: "CenturyGothicBold" }}
           >
             {formatMoney(cashSnapshot.amount)}
           </Text>
 
           <Text
-            className="text-sm font-normal mb-4"
-            style={{ color: colors.textSecondary }}
+            className="text-sm mb-4"
+            style={{ color: colors.textSecondary, fontFamily: "CenturyGothic" }}
           >
             Enter how much money you have right now to keep recommendations
             accurate.
@@ -57,7 +57,20 @@ export default function UpdateCashScreen() {
           keyboardType="decimal-pad"
         />
 
-        <PrimaryButton onPress={handleSubmit}>Update Cash</PrimaryButton>
+        <Touchable
+          onPress={handleSubmit}
+          className="min-h-[52px] flex-row items-center justify-center gap-3 rounded-xl"
+          style={{
+            backgroundColor: colors.text,
+          }}
+        >
+          <Text
+            className="text-base font-semibold"
+            style={{ color: colors.surface, fontFamily: "CenturyGothicBold" }}
+          >
+            Add
+          </Text>
+        </Touchable>
       </ScrollView>
     </SafeAreaView>
   );

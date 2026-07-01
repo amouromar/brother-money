@@ -1,14 +1,36 @@
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { formatMoney } from "../../lib/brother-money/currency";
 import { Transaction } from "../../lib/brother-money/types";
+import { Touchable } from "../ui/Touchable";
 
 interface TransactionItemProps {
   transaction: Transaction;
+  onEdit: (transaction: Transaction) => void;
+  onDelete: (transactionId: string) => void;
 }
 
-export function TransactionItem({ transaction }: TransactionItemProps) {
+export function TransactionItem({
+  transaction,
+  onEdit,
+  onDelete,
+}: TransactionItemProps) {
   const { colors } = useTheme();
+
+  const handleDelete = () => {
+    Alert.alert(
+      "Delete Transaction",
+      "Are you sure you want to delete this transaction?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => onDelete(transaction.id),
+        },
+      ],
+    );
+  };
 
   const isIncome = transaction.kind === "income";
   const isExpense = transaction.kind === "expense";
@@ -68,6 +90,27 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
           {isIncome ? "+" : isExpense ? "-" : ""}
           {formatMoney(transaction.amount)}
         </Text>
+        <View className="flex-row gap-4 mt-1 py-2">
+          <Touchable onPress={() => onEdit(transaction)}>
+            <Text
+              className="text-sm"
+              style={{
+                color: colors.textSecondary,
+                fontFamily: "CenturyGothicBold",
+              }}
+            >
+              Edit
+            </Text>
+          </Touchable>
+          <Touchable onPress={handleDelete}>
+            <Text
+              className="text-sm"
+              style={{ color: "#EF4444", fontFamily: "CenturyGothicBold" }}
+            >
+              Delete
+            </Text>
+          </Touchable>
+        </View>
       </View>
     </View>
   );

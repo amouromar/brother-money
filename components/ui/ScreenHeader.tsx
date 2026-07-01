@@ -1,9 +1,10 @@
 import { useRouter } from "expo-router";
-import { Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Moon, Sun } from "lucide-react-native";
+import { Text, View, ViewStyle } from "react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useBrotherMoneyStore } from "../../store/useBrotherMoneyStore";
 import { ArrowSmRight } from "./icons";
-import { Moon, Sun } from "lucide-react-native";
+import { Touchable } from "../ui/Touchable";
 
 interface ScreenHeaderProps {
   title: string;
@@ -33,9 +34,9 @@ export function ScreenHeader({
     >
       <View className="flex-row items-center flex-1">
         {showBackButton && (
-          <TouchableOpacity onPress={() => router.back()} className="mr-3 p-1">
+          <Touchable onPress={() => router.back()} className="mr-3 p-1">
             <ArrowSmRight />
-          </TouchableOpacity>
+          </Touchable>
         )}
         <Text
           className="text-4xl"
@@ -46,7 +47,7 @@ export function ScreenHeader({
       </View>
       <View className="flex-row items-center">
         {showThemeToggle && (
-          <TouchableOpacity
+          <Touchable
             onPress={toggleTheme}
             className="p-2 rounded-lg items-center justify-center"
             style={{ backgroundColor: colors.card }}
@@ -56,7 +57,7 @@ export function ScreenHeader({
             ) : (
               <Sun size={20} color={colors.text} />
             )}
-          </TouchableOpacity>
+          </Touchable>
         )}
         {rightAction && <View className="ml-2">{rightAction}</View>}
       </View>

@@ -1,16 +1,46 @@
 import { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../../contexts/ThemeContext";
+import { WishlistItem as WishlistItemType } from "../../lib/brother-money/types";
 import { useBrotherMoneyStore } from "../../store/useBrotherMoneyStore";
 import { ScreenHeader } from "../ui/ScreenHeader";
 import { AddWishlistItemModal } from "./AddWishlistItemModal";
 import { WishlistItem } from "./WishlistItem";
+import { Touchable } from "../ui/Touchable";
 
 export function WishlistScreen() {
   const { colors } = useTheme();
-  const { wishlistItems } = useBrotherMoneyStore();
+  const { wishlistItems, deleteWishlistItemById } = useBrotherMoneyStore();
   const [showAddModal, setShowAddModal] = useState(false);
+  const [editingItem, setEditingItem] = useState<WishlistItemType | undefined>(
+    undefined,
+  );
+
+  const handleEdit = (item: WishlistItemType) => {
+    setEditingItem(item);
+    setShowAddModal(true);
+  };
+
+  const handleDelete = (item: WishlistItemType) => {
+    Alert.alert(
+      "Delete Item",
+      `Are you sure you want to delete "${item.name}"?`,
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => deleteWishlistItemById(item.id),
+        },
+      ],
+    );
+  };
+
+  const handleCloseModal = () => {
+    setShowAddModal(false);
+    setEditingItem(undefined);
+  };
 
   return (
     <SafeAreaView className={`flex-1 ${colors.background}`}>
@@ -28,13 +58,18 @@ export function WishlistScreen() {
           </View>
         ) : (
           wishlistItems.map((item) => (
-            <WishlistItem key={item.id} item={item} />
+            <WishlistItem
+              key={item.id}
+              item={item}
+              onEdit={() => handleEdit(item)}
+              onDelete={() => handleDelete(item)}
+            />
           ))
         )}
       </ScrollView>
 
       <View className="p-4">
-        <TouchableOpacity
+        <Touchable
           onPress={() => setShowAddModal(true)}
           className="min-h-[52px] flex-row items-center justify-center gap-3 rounded-xl"
           style={{
@@ -47,12 +82,14 @@ export function WishlistScreen() {
           >
             Add
           </Text>
-        </TouchableOpacity>
+        </Touchable>
       </View>
 
       <AddWishlistItemModal
+        key={editingItem?.id ?? "new"}
         visible={showAddModal}
-        onClose={() => setShowAddModal(false)}
+        onClose={handleCloseModal}
+        item={editingItem}
       />
     </SafeAreaView>
   );

@@ -1,14 +1,17 @@
 import { Text, View } from "react-native";
 import { useTheme } from "../../contexts/ThemeContext";
-import { WishlistItem as WishlistItemType } from "../../lib/brother-money/types";
 import { formatMoney } from "../../lib/brother-money/currency";
+import { WishlistItem as WishlistItemType } from "../../lib/brother-money/types";
 import { AppCard } from "../ui/AppCard";
+import { Touchable } from "../ui/Touchable";
 
 interface WishlistItemProps {
   item: WishlistItemType;
+  onEdit: () => void;
+  onDelete: () => void;
 }
 
-export function WishlistItem({ item }: WishlistItemProps) {
+export function WishlistItem({ item, onEdit, onDelete }: WishlistItemProps) {
   const { colors } = useTheme();
 
   return (
@@ -35,6 +38,32 @@ export function WishlistItem({ item }: WishlistItemProps) {
           >
             {formatMoney(item.cost)}
           </Text>
+        </View>
+        <View className="flex-row gap-2">
+          <Touchable
+            onPress={onEdit}
+            className="p-2"
+            style={{ backgroundColor: colors.surface }}
+          >
+            <Text
+              className="text-sm"
+              style={{ color: colors.text, fontFamily: "CenturyGothicBold" }}
+            >
+              Edit
+            </Text>
+          </Touchable>
+          <Touchable
+            onPress={onDelete}
+            className="p-2"
+            style={{ backgroundColor: colors.surface }}
+          >
+            <Text
+              className="text-sm"
+              style={{ color: "#ef4444", fontFamily: "CenturyGothicBold" }}
+            >
+              Delete
+            </Text>
+          </Touchable>
         </View>
       </View>
       <View

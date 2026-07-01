@@ -1,9 +1,10 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { formatMoney } from "../../lib/brother-money/currency";
 import { SavingsRule } from "../../lib/brother-money/types";
 import { useBrotherMoneyStore } from "../../store/useBrotherMoneyStore";
 import { AppCard } from "../ui/AppCard";
+import { Touchable } from "../ui/Touchable";
 
 interface SavingsItemProps {
   rule: SavingsRule;
@@ -46,7 +47,7 @@ export function SavingsItem({ rule }: SavingsItemProps) {
           </Text>
         </View>
         <View className="flex-row gap-2">
-          <TouchableOpacity
+          <Touchable
             onPress={handleToggleActive}
             className="px-3 py-1 rounded-lg"
             style={{
@@ -62,8 +63,8 @@ export function SavingsItem({ rule }: SavingsItemProps) {
             >
               {rule.active ? "Active" : "Inactive"}
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Touchable>
+          <Touchable
             onPress={handleDelete}
             className="px-3 py-1 rounded-lg"
             style={{ backgroundColor: "#EF4444" }}
@@ -77,7 +78,7 @@ export function SavingsItem({ rule }: SavingsItemProps) {
             >
               Delete
             </Text>
-          </TouchableOpacity>
+          </Touchable>
         </View>
       </View>
     </AppCard>

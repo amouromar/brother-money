@@ -1,56 +1,130 @@
-# Welcome to your Expo app 👋
+# Welcome to Brother Money 🫂
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Simple. Private. Free. Offline-first.
 
-## Get started
+Brother Money is a personal money guide that helps you answer one question every day:
 
-1. Install dependencies
+**Can I safely spend this money today?**
 
-   ```bash
-   npm install
-   ```
+Most finance apps focus on tracking the past.  
+Brother Money protects your bills, savings, and emergency reserves automatically, then tells you exactly how much you can spend today — without any subscriptions, bank connections, ads, or complicated budgeting.
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+### Core Problem
 
-In the output, you'll find options to open the app in a
+Most people do not want to manage money.  
+They want **confidence** when making spending decisions.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Target Users
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- Live paycheck to paycheck
+- Want simple financial guidance
+- Dislike budgeting apps
+- Prefer privacy
+- Want offline access
+- Need help making daily spending decisions
 
-## Get a fresh project
+---
 
-When you're ready, run:
+### Product Vision
 
-```bash
-npm run reset-project
-```
+Brother Money helps you answer one question every day:
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+**Can I safely spend this money today?**
 
-### Other setup steps
+Open the app.  
+Enter how much money you currently have.  
+Instantly see:
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+- **Safe Spend Today** — exactly how much you can spend while staying on track
+- **Protected Money** — your upcoming bills, savings commitments, and emergency buffer
+- **Available Cash** — your current balance
+- **One clear Brother Advice** — a single sentence of guidance
 
-## Learn more
+No charts. No dashboards. No learning curves.
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### How It Works
 
-## Join the community
+**Initial Setup** (once only)  
+Simply enter your Current Cash (cash on hand + bank balance + available money).
 
-Join our community of developers creating universal apps.
+**Everyday Use**
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Log transactions quickly (expenses, income, quick presets)
+- Update your Current Cash anytime with **My Money Now**
+- Use **Can I Buy This?** to evaluate any purchase in seconds
+- See a simple weekly summary and your **Brother Score** (0–100) for consistency
+
+Everything works **offline** after installation. All data stays on your device.
+
+---
+
+### Key Features
+
+- **Safe Spend Today** — the heart of the app (continuous calculation)
+- **Protected Money** — automatically shields bills, savings, and emergency buffer
+- **Transaction Logging** — simple, fast, no analytics or charts
+- **Quick Log Presets** — coffee, lunch, taxi — 2-second logging
+- **Can I Buy This?** — primary decision feature
+- **Wishlist Purchases** — track items you want and when they’re safe to buy
+- **Weekly Summary** — simple text recap
+- **Brother Score** — personal consistency score (encourages good habits without games)
+- **Update Current Cash** — recalculate everything instantly
+
+---
+
+### Product Principles
+
+- **Simple** — Understand in 30 seconds
+- **Private** — All data stays on your device. No accounts. No cloud. No tracking.
+- **Offline-first** — Fully functional without internet
+- **Actionable** — Every screen helps answer: Can I safely spend this?
+
+---
+
+### Success Metric
+
+You open Brother Money **every day** before making spending decisions.
+
+Success is measured by one question:  
+**Did Brother Money help you make a confident spending decision today?**
+
+---
+
+### Future Scope
+
+**Included in this version**
+
+- Transaction logging
+- Income tracking
+- Wishlist purchases
+- Weekly summaries
+- Brother Score
+
+**Explicitly Excluded**
+
+- Bank integrations
+- Investment tracking
+- Credit score tracking
+- Cryptocurrency features
+- Financial news
+- Social features
+- AI chatbots
+- Budget dashboards
+- Pie charts
+- Spending heatmaps
+
+---
+
+### Product Promise
+
+Open the app.  
+Enter how much money you have.  
+Feel confident spending today.
+
+---
+
+Brother Money tells you exactly how much you can safely spend today while protecting your bills, savings, and future.

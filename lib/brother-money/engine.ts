@@ -5,6 +5,7 @@ import type {
   PurchaseCheck,
   SavingsRule,
   Transaction,
+  WishlistItem,
 } from "./types";
 
 function sumActiveItems<T extends { amount: number; active: boolean }>(
@@ -116,8 +117,9 @@ export function calculateOverview(
   const averageDailySpend =
     recentSpending / Math.max(spendingPreferences.velocityWindowDays, 1);
 
-  // 3. Apply velocity smoothing - cap at 1.5x average daily spend
-  const velocityAdjustedDaily = Math.min(
+  // 3. Apply velocity smoothing - use higher of daily allowance or 1.5x average daily spend
+  // This allows spending when cash is available while still considering spending habits
+  const velocityAdjustedDaily = Math.max(
     dailyAllowance,
     averageDailySpend * 1.5,
   );
@@ -306,4 +308,35 @@ export function deleteSavingsRule(
   ruleId: string,
 ): SavingsRule[] {
   return rules.filter((r) => r.id !== ruleId);
+}
+
+export function createWishlistItem(payload: {
+  name: string;
+  cost: number;
+  note: string;
+}): WishlistItem {
+  return {
+    id: `wishlist-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+    name: payload.name,
+    cost: payload.cost,
+    note: payload.note,
+    createdAt: new Date().toISOString(),
+  };
+}
+
+export function updateWishlistItem(
+  item: WishlistItem,
+  updates: Partial<Omit<WishlistItem, "id" | "createdAt">>,
+): WishlistItem {
+  return {
+    ...item,
+    ...updates,
+  };
+}
+
+export function deleteWishlistItem(
+  items: WishlistItem[],
+  itemId: string,
+): WishlistItem[] {
+  return items.filter((i) => i.id !== itemId);
 }

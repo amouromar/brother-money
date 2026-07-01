@@ -1,12 +1,13 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useBrotherMoneyStore } from "../../store/useBrotherMoneyStore";
 import { AppCard } from "../ui/AppCard";
 import { ScreenHeader } from "../ui/ScreenHeader";
 import { TextField } from "../ui/TextField";
+import { Touchable } from "../ui/Touchable";
 
 export function SettingsScreen() {
   const router = useRouter();
@@ -61,7 +62,7 @@ export function SettingsScreen() {
                 Theme
               </Text>
             </View>
-            <TouchableOpacity
+            <Touchable
               onPress={toggleTheme}
               className="h-12 flex-row items-center justify-center gap-3 rounded-xl px-4"
               style={{ backgroundColor: colors.text }}
@@ -75,7 +76,7 @@ export function SettingsScreen() {
               >
                 {theme}
               </Text>
-            </TouchableOpacity>
+            </Touchable>
           </View>
         </AppCard>
 
@@ -102,7 +103,7 @@ export function SettingsScreen() {
               keyboardType="decimal-pad"
               containerStyle={{ flex: 1 }}
             />
-            <TouchableOpacity
+            <Touchable
               onPress={handleUpdateBuffer}
               className="h-12 flex-row items-center justify-center gap-3 rounded-xl px-4"
               style={{ backgroundColor: colors.text }}
@@ -116,15 +117,12 @@ export function SettingsScreen() {
               >
                 Update
               </Text>
-            </TouchableOpacity>
+            </Touchable>
           </View>
         </AppCard>
 
         {/* Spending Preferences */}
-        <TouchableOpacity
-          onPress={() => router.push("/spending-settings")}
-          activeOpacity={0.7}
-        >
+        <Touchable onPress={() => router.push("/spending-settings")}>
           <AppCard>
             <View className="flex-row justify-between items-center">
               <View>
@@ -149,7 +147,7 @@ export function SettingsScreen() {
               </View>
             </View>
           </AppCard>
-        </TouchableOpacity>
+        </Touchable>
 
         {/* Data Management */}
         <AppCard>
@@ -160,7 +158,7 @@ export function SettingsScreen() {
             Data Management
           </Text>
 
-          <TouchableOpacity
+          <Touchable
             onPress={handleResetData}
             className="h-12 flex-row items-center justify-center gap-3 rounded-xl px-4"
             style={{ backgroundColor: colors.text }}
@@ -171,9 +169,9 @@ export function SettingsScreen() {
             >
               Reset Demo Data
             </Text>
-          </TouchableOpacity>
+          </Touchable>
 
-          <TouchableOpacity
+          <Touchable
             onPress={handleExportBackup}
             className="h-12 flex-row items-center justify-center gap-3 rounded-xl px-4 mt-2"
             style={{ backgroundColor: colors.text }}
@@ -184,7 +182,7 @@ export function SettingsScreen() {
             >
               Export Backup
             </Text>
-          </TouchableOpacity>
+          </Touchable>
         </AppCard>
 
         {/* App Info */}

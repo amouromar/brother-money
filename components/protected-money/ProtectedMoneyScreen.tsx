@@ -6,7 +6,6 @@ import {
   Platform,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,6 +15,7 @@ import { useBrotherMoneyStore } from "../../store/useBrotherMoneyStore";
 import { AppCard } from "../ui/AppCard";
 import { ScreenHeader } from "../ui/ScreenHeader";
 import { TextField } from "../ui/TextField";
+import { Touchable } from "../ui/Touchable";
 
 export function ProtectedMoneyScreen() {
   const router = useRouter();
@@ -72,10 +72,7 @@ export function ProtectedMoneyScreen() {
         </Text>
 
         {/* Bills */}
-        <TouchableOpacity
-          onPress={() => router.push("/bills")}
-          activeOpacity={0.7}
-        >
+        <Touchable onPress={() => router.push("/bills")}>
           <AppCard className="rounded-2xl px-6 py-4">
             <View className="flex-row justify-between items-center">
               <View>
@@ -107,13 +104,10 @@ export function ProtectedMoneyScreen() {
               </Text>
             </View>
           </AppCard>
-        </TouchableOpacity>
+        </Touchable>
 
         {/* Savings */}
-        <TouchableOpacity
-          onPress={() => router.push("/savings")}
-          activeOpacity={0.7}
-        >
+        <Touchable onPress={() => router.push("/savings")}>
           <AppCard className="rounded-2xl px-6 py-4">
             <View className="flex-row justify-between items-center">
               <View>
@@ -146,13 +140,10 @@ export function ProtectedMoneyScreen() {
               </Text>
             </View>
           </AppCard>
-        </TouchableOpacity>
+        </Touchable>
 
         {/* Emergency Buffer */}
-        <TouchableOpacity
-          onPress={() => setShowBufferModal(true)}
-          activeOpacity={0.7}
-        >
+        <Touchable onPress={() => setShowBufferModal(true)}>
           <AppCard className="rounded-2xl px-6 py-4">
             <View className="flex-row justify-between items-center">
               <View>
@@ -183,7 +174,7 @@ export function ProtectedMoneyScreen() {
               </Text>
             </View>
           </AppCard>
-        </TouchableOpacity>
+        </Touchable>
       </ScrollView>
 
       {/* Emergency Buffer Modal */}
@@ -207,7 +198,7 @@ export function ProtectedMoneyScreen() {
             >
               Emergency Buffer
             </Text>
-            <TouchableOpacity onPress={() => setShowBufferModal(false)}>
+            <Touchable onPress={() => setShowBufferModal(false)}>
               <Text
                 className="text-base"
                 style={{
@@ -217,7 +208,7 @@ export function ProtectedMoneyScreen() {
               >
                 Cancel
               </Text>
-            </TouchableOpacity>
+            </Touchable>
           </View>
 
           <View className="p-4 gap-4">
@@ -229,7 +220,7 @@ export function ProtectedMoneyScreen() {
               keyboardType="decimal-pad"
             />
 
-            <TouchableOpacity
+            <Touchable
               onPress={handleUpdateBuffer}
               className="min-h-[52px] flex-row items-center justify-center gap-3 rounded-xl"
               style={{ backgroundColor: colors.text }}
@@ -243,7 +234,7 @@ export function ProtectedMoneyScreen() {
               >
                 Update Buffer
               </Text>
-            </TouchableOpacity>
+            </Touchable>
           </View>
         </KeyboardAvoidingView>
       </Modal>

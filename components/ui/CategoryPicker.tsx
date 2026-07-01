@@ -1,9 +1,10 @@
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import {
   CategoryType,
   getCategories,
 } from "../../lib/brother-money/categories";
+import { Touchable } from "../ui/Touchable";
 
 interface CategoryPickerProps {
   type: CategoryType;
@@ -31,8 +32,11 @@ export function CategoryPicker({
       {/* Category Selection */}
       <View>
         <Text
-          className="text-sm font-medium mb-2"
-          style={{ color: colors.textSecondary }}
+          className="text-sm mb-2"
+          style={{
+            color: colors.textSecondary,
+            fontFamily: "CenturyGothicBold",
+          }}
         >
           Category
         </Text>
@@ -42,7 +46,7 @@ export function CategoryPicker({
           className="flex-row gap-2"
         >
           {categories.map((category) => (
-            <TouchableOpacity
+            <Touchable
               key={category.id}
               onPress={() => {
                 onCategoryChange(category.id);
@@ -61,17 +65,18 @@ export function CategoryPicker({
               }}
             >
               <Text
-                className="text-sm font-medium"
+                className="text-sm"
                 style={{
                   color:
                     selectedCategory === category.id
                       ? colors.text
                       : colors.textSecondary,
+                  fontFamily: "CenturyGothicBold",
                 }}
               >
                 {category.name}
               </Text>
-            </TouchableOpacity>
+            </Touchable>
           ))}
         </ScrollView>
       </View>
@@ -81,14 +86,17 @@ export function CategoryPicker({
         selectedCategoryData.subcategories.length > 0 && (
           <View>
             <Text
-              className="text-sm font-medium mb-2"
-              style={{ color: colors.textSecondary }}
+              className="text-sm mb-2"
+              style={{
+                color: colors.textSecondary,
+                fontFamily: "CenturyGothicBold",
+              }}
             >
               Subcategory
             </Text>
             <View className="flex-row flex-wrap gap-2">
               {selectedCategoryData.subcategories.map((subcategory) => (
-                <TouchableOpacity
+                <Touchable
                   key={subcategory.id}
                   onPress={() => onSubcategoryChange(subcategory.id)}
                   className={`px-4 py-2 rounded-full ${
@@ -106,17 +114,18 @@ export function CategoryPicker({
                   }}
                 >
                   <Text
-                    className="text-sm font-medium"
+                    className="text-sm"
                     style={{
                       color:
                         selectedSubcategory === subcategory.id
                           ? colors.text
                           : colors.textSecondary,
+                      fontFamily: "CenturyGothicBold",
                     }}
                   >
                     {subcategory.name}
                   </Text>
-                </TouchableOpacity>
+                </Touchable>
               ))}
             </View>
           </View>

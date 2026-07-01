@@ -1,10 +1,19 @@
-import { View, Text, ScrollView } from "react-native";
-import { useBrotherMoneyStore } from "../../store/useBrotherMoneyStore";
+import { ScrollView, Text, View } from "react-native";
 import { useTheme } from "../../contexts/ThemeContext";
-import { TransactionItem } from "./TransactionItem";
 import { formatMoney } from "../../lib/brother-money/currency";
+import { Transaction } from "../../lib/brother-money/types";
+import { useBrotherMoneyStore } from "../../store/useBrotherMoneyStore";
+import { TransactionItem } from "./TransactionItem";
 
-export function TransactionList() {
+interface TransactionListProps {
+  onEditTransaction?: (transaction: Transaction) => void;
+  onDeleteTransaction?: (transactionId: string) => void;
+}
+
+export function TransactionList({
+  onEditTransaction,
+  onDeleteTransaction,
+}: TransactionListProps) {
   const { colors } = useTheme();
   const { transactions, cashSnapshot } = useBrotherMoneyStore();
 
@@ -26,7 +35,7 @@ export function TransactionList() {
   });
 
   return (
-    <ScrollView className="flex-1">
+    <ScrollView className="flex-1 px-4 pb-6">
       <View
         className="p-4 items-center border-b"
         style={{ borderColor: colors.border }}
@@ -49,7 +58,7 @@ export function TransactionList() {
       </View>
 
       {sortedDates.map((date) => (
-        <View key={date} className="mt-4 px-2">
+        <View key={date} className="mt-6 px-2">
           <Text
             className="text-sm px-4 py-2 capitalize"
             style={{ color: colors.textMuted, fontFamily: "CenturyGothicBold" }}
@@ -57,7 +66,12 @@ export function TransactionList() {
             {date}
           </Text>
           {groupedTransactions[date].map((transaction) => (
-            <TransactionItem key={transaction.id} transaction={transaction} />
+            <TransactionItem
+              key={transaction.id}
+              transaction={transaction}
+              onEdit={onEditTransaction || (() => {})}
+              onDelete={onDeleteTransaction || (() => {})}
+            />
           ))}
         </View>
       ))}

@@ -4,27 +4,60 @@ import {
   Modal,
   Platform,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../../contexts/ThemeContext";
+import { Transaction } from "../../lib/brother-money/types";
 import { useBrotherMoneyStore } from "../../store/useBrotherMoneyStore";
 import { CategoryPicker } from "../ui/CategoryPicker";
 import { TextField } from "../ui/TextField";
 import { QuickLogPresets } from "./QuickLogPresets";
+import { Touchable } from "../ui/Touchable";
 
 interface LogExpenseModalProps {
   visible: boolean;
   onClose: () => void;
+  editingTransaction?: Transaction | null;
 }
 
-export function LogExpenseModal({ visible, onClose }: LogExpenseModalProps) {
+export function LogExpenseModal({
+  visible,
+  onClose,
+  editingTransaction,
+}: LogExpenseModalProps) {
+  return (
+    <Modal
+      visible={visible}
+      animationType="slide"
+      presentationStyle="pageSheet"
+    >
+      <LogExpenseForm
+        key={editingTransaction?.id ?? "new"}
+        editingTransaction={editingTransaction}
+        onClose={onClose}
+      />
+    </Modal>
+  );
+}
+
+interface LogExpenseFormProps {
+  editingTransaction?: Transaction | null;
+  onClose: () => void;
+}
+
+function LogExpenseForm({ editingTransaction, onClose }: LogExpenseFormProps) {
   const { colors } = useTheme();
-  const { logExpense } = useBrotherMoneyStore();
-  const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("");
-  const [subcategory, setSubcategory] = useState("");
-  const [note, setNote] = useState("");
+  const { logExpense, updateTransactionById } = useBrotherMoneyStore();
+
+  const [amount, setAmount] = useState(
+    editingTransaction?.amount.toString() ?? "",
+  );
+  const [category, setCategory] = useState(editingTransaction?.category ?? "");
+  const [subcategory, setSubcategory] = useState(
+    editingTransaction?.subcategory ?? "",
+  );
+  const [note, setNote] = useState(editingTransaction?.note ?? "");
 
   const handlePresetSelect = (preset: string) => {
     setCategory(preset);
@@ -33,30 +66,31 @@ export function LogExpenseModal({ visible, onClose }: LogExpenseModalProps) {
 
   const handleSubmit = async () => {
     const amountNum = parseFloat(amount);
+
     if (!amountNum || amountNum <= 0) return;
     if (!category) return;
 
-    await logExpense({
-      amount: amountNum,
-      category,
-      subcategory: subcategory || undefined,
-      note,
-    });
+    if (editingTransaction) {
+      await updateTransactionById(editingTransaction.id, {
+        amount: amountNum,
+        category,
+        subcategory: subcategory || undefined,
+        note,
+      });
+    } else {
+      await logExpense({
+        amount: amountNum,
+        category,
+        subcategory: subcategory || undefined,
+        note,
+      });
+    }
 
-    // Reset form
-    setAmount("");
-    setCategory("");
-    setSubcategory("");
-    setNote("");
     onClose();
   };
 
   return (
-    <Modal
-      visible={visible}
-      animationType="slide"
-      presentationStyle="pageSheet"
-    >
+    <SafeAreaView className={`flex-1 ${colors.background}`}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
@@ -70,9 +104,10 @@ export function LogExpenseModal({ visible, onClose }: LogExpenseModalProps) {
             className="text-xl"
             style={{ color: colors.text, fontFamily: "CenturyGothicBold" }}
           >
-            Log Expense
+            {editingTransaction ? "Edit Expense" : "Log Expense"}
           </Text>
-          <TouchableOpacity onPress={onClose}>
+
+          <Touchable onPress={onClose}>
             <Text
               className="text-base"
               style={{
@@ -82,7 +117,7 @@ export function LogExpenseModal({ visible, onClose }: LogExpenseModalProps) {
             >
               Cancel
             </Text>
-          </TouchableOpacity>
+          </Touchable>
         </View>
 
         <View className="p-4 gap-4">
@@ -110,20 +145,24 @@ export function LogExpenseModal({ visible, onClose }: LogExpenseModalProps) {
             value={note}
             onChangeText={setNote}
           />
-          <TouchableOpacity
+
+          <Touchable
             onPress={handleSubmit}
-            className="min-h-[52px] flex-row items-center justify-center gap-3 rounded-xl"
+            className="min-h-[52px] flex-row items-center justify-center rounded-xl"
             style={{ backgroundColor: colors.text }}
           >
             <Text
               className="text-base"
-              style={{ color: colors.surface, fontFamily: "CenturyGothicBold" }}
+              style={{
+                color: colors.surface,
+                fontFamily: "CenturyGothicBold",
+              }}
             >
-              Add Expense
+              {editingTransaction ? "Update Expense" : "Add Expense"}
             </Text>
-          </TouchableOpacity>
+          </Touchable>
         </View>
       </KeyboardAvoidingView>
-    </Modal>
+    </SafeAreaView>
   );
 }
