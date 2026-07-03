@@ -78,7 +78,7 @@ type BrotherMoneyStore = BrotherMoneyState &
     restoreFromJson: (
       value: string,
     ) => Promise<{ ok: boolean; message: string }>;
-    resetDemoData: () => Promise<void>;
+    resetAllData: () => Promise<void>;
     previewPurchase: (input: {
       itemName: string;
       cost: number;
@@ -409,7 +409,7 @@ export const useBrotherMoneyStore = create<BrotherMoneyStore>((set, get) => ({
       return { ok: false, message: "That backup file could not be read." };
     }
   },
-  resetDemoData: async () => {
+  resetAllData: async () => {
     const next = await resetBrotherMoneyState();
     set({
       ...withDerivedState(next),

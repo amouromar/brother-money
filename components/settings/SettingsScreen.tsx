@@ -16,7 +16,7 @@ export function SettingsScreen() {
     theme,
     toggleTheme,
     emergencyBuffer,
-    resetDemoData,
+    resetAllData,
     updateEmergencyBuffer,
   } = useBrotherMoneyStore();
   const [bufferAmount, setBufferAmount] = useState(emergencyBuffer.toString());
@@ -29,7 +29,7 @@ export function SettingsScreen() {
   };
 
   const handleResetData = async () => {
-    await resetDemoData();
+    await resetAllData();
   };
 
   const handleExportBackup = () => {
@@ -167,7 +167,7 @@ export function SettingsScreen() {
               className="text-base font-semibold"
               style={{ color: colors.surface, fontFamily: "CenturyGothicBold" }}
             >
-              Reset Demo Data
+              Reset All Data
             </Text>
           </Touchable>
 
